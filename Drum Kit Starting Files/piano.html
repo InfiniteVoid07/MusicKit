@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Drum Kit</title>
+  <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  <link rel="stylesheet" href="pianoStyles.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navCustom">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page"  href="#">Guitar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Piano</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="index.html">Drum</a>
+        </li>
+      </ul>
+      
+    </div>
+    <h3 style="margin-right: 44rem;">Online Music Player</h3>
+  </nav>x
+  <h1 id="title">Piano🎹Kit</h1>
+  
+  <div class="piano">
+    <button class="key white" data-note="C">A</button>
+    <button class="key black" data-note="Cs">W</button>
+    <button class="key white" data-note="D">S</button>
+    <button class="key black" data-note="Ds">E</button>
+    <button class="key white" data-note="E">D</button>
+    <button class="key white" data-note="F">F</button>
+    <button class="key black" data-note="Fs">R</button>
+    <button class="key white" data-note="G">G</button>
+    <button class="key black" data-note="Gs">T</button>
+    <button class="key white" data-note="A">H</button>
+    <button class="key black" data-note="As">Y</button>
+    <button class="key white" data-note="B">J</button>
+  </div>
+
+  <audio src="./notes/C4.mp3" id="C"></audio>
+  <audio src="./notes/Cs4.mp3" id="Cs"></audio>
+  <audio src="./notes/D4.mp3" id="D"></audio>
+  <audio src="./notes/Ds4.mp3" id="Ds"></audio>
+  <audio src="./notes/E4.mp3" id="E"></audio>
+  <audio src="./notes/F4.mp3" id="F"></audio>
+  <audio src="./notes/Fs4.mp3" id="Fs"></audio>
+  <audio src="./notes/G4.mp3" id="G"></audio>
+  <audio src="./notes/Gs4.mp3" id="Gs"></audio>
+  <audio src="./notes/A4.mp3" id="A"></audio>
+  <audio src="./notes/As4.mp3" id="As"></audio>
+  <audio src="./notes/B4.mp3" id="B"></audio>
+
+  <button id="startRecording" class="pressed">Start Recording</button>
+  <button id="stopRecording" class="pressed">Stop Recording</button>
+  <button id="saveRecording" class="pressed">Save Recording</button>
+
+  <footer>
+    ©March 2024
+  </footer>
+
+  <script>
+    const keys = document.querySelectorAll('.key');
+    const regulars = document.querySelectorAll('.key.white');
+    const sharps = document.querySelectorAll('.key.black');
+    const whites = ['a', 's', 'd', 'f', 'g', 'h', 'j'];
+    const blacks = ['w', 'e', 'r', 't', 'y']
+
+    keys.forEach(key => {
+        key.addEventListener('click', () => playNote(key))
+    })
+
+    document.addEventListener('keydown', e => {
+        if (e.repeat) return
+        const key = e.key
+        const whiteKeyIndex = whites.indexOf(key)
+        const blackKeyIndex = blacks.indexOf(key)
+
+        if (whiteKeyIndex > -1) playNote(regulars[whiteKeyIndex])
+        if (blackKeyIndex > -1) playNote(sharps[blackKeyIndex])
+    })
+
+    let playNote = (key) => {
+        const noteSound = document.getElementById(key.dataset.note)
+        noteSound.currentTime = 0
+        noteSound.play()
+        key.classList.add('active')
+        noteSound.addEventListener('ended', () => {
+            key.classList.remove('active')
+        })
+    }
+</script>
+  
+</body>
+
+</html>
